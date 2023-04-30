@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F1B631B29FF177700FFD1B6 /* API in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1B631A29FF177700FFD1B6 /* API */; };
 		4F8F96DC29FF02A7000D0A70 /* NewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F96DB29FF02A7000D0A70 /* NewsApp.swift */; };
 		4F8F96DE29FF02A7000D0A70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F96DD29FF02A7000D0A70 /* ContentView.swift */; };
 		4F8F96E029FF02A9000D0A70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F96DF29FF02A9000D0A70 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		4F1B631C29FF201500FFD1B6 /* News.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = News.xctestplan; sourceTree = "<group>"; };
+		4F1B631929FF175100FFD1B6 /* API */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = API; sourceTree = "<group>"; };
 		4F8F96D829FF02A7000D0A70 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8F96DB29FF02A7000D0A70 /* NewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsApp.swift; sourceTree = "<group>"; };
 		4F8F96DD29FF02A7000D0A70 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1B631B29FF177700FFD1B6 /* API in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,10 +82,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F1B631829FF175100FFD1B6 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				4F1B631929FF175100FFD1B6 /* API */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		4F8F96CF29FF02A7000D0A70 = {
 			isa = PBXGroup;
 			children = (
 				4F1B631C29FF201500FFD1B6 /* News.xctestplan */,
+				4F1B631829FF175100FFD1B6 /* Packages */,
 				4F8F96DA29FF02A7000D0A70 /* News */,
 				4F8F96EB29FF02A9000D0A70 /* NewsTests */,
 				4F8F96F529FF02A9000D0A70 /* NewsUITests */,
@@ -154,6 +166,7 @@
 			);
 			name = News;
 			packageProductDependencies = (
+				4F1B631A29FF177700FFD1B6 /* API */,
 			);
 			productName = News;
 			productReference = 4F8F96D829FF02A7000D0A70 /* News.app */;
@@ -587,6 +600,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4F1B631A29FF177700FFD1B6 /* API */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = API;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F8F96D029FF02A7000D0A70 /* Project object */;
 }

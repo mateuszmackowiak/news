@@ -33,6 +33,13 @@
         "identifier" : "4F8F96F129FF02A9000D0A70",
         "name" : "NewsUITests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:API",
+        "identifier" : "APITests",
+        "name" : "APITests"
+      }
     }
   ],
   "version" : 1
