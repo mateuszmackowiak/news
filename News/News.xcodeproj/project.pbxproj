@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F1B631C29FF201500FFD1B6 /* News.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = News.xctestplan; sourceTree = "<group>"; };
 		4F8F96D829FF02A7000D0A70 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8F96DB29FF02A7000D0A70 /* NewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsApp.swift; sourceTree = "<group>"; };
 		4F8F96DD29FF02A7000D0A70 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		4F8F96CF29FF02A7000D0A70 = {
 			isa = PBXGroup;
 			children = (
+				4F1B631C29FF201500FFD1B6 /* News.xctestplan */,
 				4F8F96DA29FF02A7000D0A70 /* News */,
 				4F8F96EB29FF02A9000D0A70 /* NewsTests */,
 				4F8F96F529FF02A9000D0A70 /* NewsUITests */,
@@ -483,7 +485,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pl.mateuszmackowiak.NewsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -502,7 +503,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pl.mateuszmackowiak.NewsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
