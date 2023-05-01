@@ -14,9 +14,7 @@ struct NewsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                viewFactory.topHeadlinesView()
-            }
+            viewFactory.mainView()
             .preferredColorScheme(.dark)
         }
     }

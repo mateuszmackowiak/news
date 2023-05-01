@@ -9,10 +9,12 @@ import SwiftUI
 
 extension Image {
     static let logo = Image("Logo")
+    static let headlinesTabItem = Image("HeadlinesTabItem")
 }
 
 extension Color {
     static let background = Color("Background")
     static let primaryText = Color("TextColor")
     static let secondaryText = Color("SecondaryTextColor")
+    static let secondaryAccentColor = Color("SecondaryAccentColor")
 }

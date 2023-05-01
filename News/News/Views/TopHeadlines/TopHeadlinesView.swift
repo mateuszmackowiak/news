@@ -13,11 +13,19 @@ struct TopHeadlinesView: View {
     var body: some View {
         VStack {
             List {
-                ForEach(viewModel.articles ?? []) { article in
-                    NavigationLink {
-                        ArticleDetailsView(article: article)
-                    } label: {
-                        ArticleBasicInfoView(title: article.title, source: article.source)
+                ForEach(viewModel.articles ?? [], id: \.0) { (article, bookmarked) in
+                    ZStack {
+                        NavigationLink(destination: ArticleDetailsView(article: article)) { EmptyView() }.opacity(0.0)
+
+                        ArticleSummaryView(title: article.title,
+                                           imageURL: article.urlToImage,
+                                           desc: article.description,
+                                           bookmarked: bookmarked,
+                                           publishedDate: article.publishedAt,
+                                           source: article.source.name,
+                                           bookmarkAction: {
+                            viewModel.bookmarkAction(for: article)
+                        })
                     }
                 }
                 .listRowBackground(Color.clear)
@@ -64,34 +72,6 @@ struct TopHeadlinesView: View {
     }
 }
 
-extension TopHeadlinesView {
-    @MainActor
-    final class ViewModel: ObservableObject {
-        private var provider: any ArticleProvider
-        @Published private(set) var failureMessage: String?
-        @Published private(set) var articles: [Article]?
-
-        init(provider: any ArticleProvider) {
-            self.provider = provider
-        }
-
-        func onAppear() {
-            Task {
-                await onRefresh()
-            }
-        }
-
-        func onRefresh() async {
-            do {
-                articles = try await provider.articles()
-            } catch {
-                failureMessage = "\(error)"
-            }
-        }
-    }
-}
-
-
 struct TopHeadlinesView_Previews: PreviewProvider {
     private struct ArticleProviderMock: ArticleProvider {
         func articles() async throws -> [Article] {
@@ -104,7 +84,17 @@ struct TopHeadlinesView_Previews: PreviewProvider {
                      url: URL(string: "https://t3n.de/news/infografik-energieverbrauch-bitcoin-ethereum-vergleich-1548941/")!,
                      urlToImage: URL(string: "https://t3n.de/news/wp-content/uploads/2023/04/Bitcoin-Ethereum-stromverbrauch-vergleich.jpg")!,
                      publishedAt: Date(timeIntervalSince1970: 1682773200),
-                     content: "Die University of Cambridge zeigt in einer Analyse, wie viel Energie Ethereum vor und nach dem Wechsel von Proof-of-Work zu Proof-of-Stake verbraucht und wie diese Werte mit dem Verbrauch von Bitcoin… [+2366 chars]")
+                     content: "Die University of Cambridge zeigt in einer Analyse, wie viel Energie Ethereum vor und nach dem Wechsel von Proof-of-Work zu Proof-of-Stake verbraucht und wie diese Werte mit dem Verbrauch von Bitcoin… [+2366 chars]"),
+
+                Article(id: "https://9to5mac.com/2023/04/29/malware-virus-scanner-for-mac/",
+                        source: .init(id: nil, name: "9to5Mac"),
+                        author: "Michael Potuck",
+                        title: "Virus scanner for Mac – How to remove malware - 9to5Mac",
+                        description: "This guide covers malware and virus scanner for Mac tools from free to paid to help you find and remove malicious software.",
+                        url: URL(string: "https://9to5mac.com/2023/04/29/malware-virus-scanner-for-mac/")!,
+                        urlToImage: URL(string: "https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2023/04/malware-virus-scanner-for-mac.jpeg?resize=1200%2C628&quality=82&strip=all&ssl=1")!,
+                        publishedAt: Date(timeIntervalSince1970: 1682373200),
+                        content: "Macs are more protected from malicious software like viruses, Trojans, adware, etc. than Windows and Linux. However, they aren’t immune, and more and more malware is being designed specifically for M… [+3682 chars]")
             ]
         }
     }
@@ -112,6 +102,6 @@ struct TopHeadlinesView_Previews: PreviewProvider {
         NavigationView {
             TopHeadlinesView(viewModel: .init(provider: ArticleProviderMock()))
         }
-            .preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
     }
 }

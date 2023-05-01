@@ -22,6 +22,7 @@ struct ActivityIndicatorView: View {
                         self.scale = 1
                     }
                 }
+
         }
     }
 
@@ -31,11 +32,12 @@ struct ActivityIndicatorView: View {
             DotView(delay: 0.4)
             DotView(delay: 0.8)
         }
+        .frame(maxWidth: 40)
     }
 }
 
 struct ActivityIndicatorView_Preview: PreviewProvider {
     static var previews: some View {
-        ActivityIndicatorView().frame(width: 48)
+        ActivityIndicatorView()
     }
 }

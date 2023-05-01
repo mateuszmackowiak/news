@@ -32,7 +32,7 @@ public final class NetworkClientArticleApi: ArticleAPI {
     }
     private struct ResponseContainer: Decodable {
         let status: String
-        let totalResults: Int
+        let totalResults: Int?
         let articles: [Article]
     }
     let client: Client
@@ -55,8 +55,10 @@ public final class NetworkClientArticleApi: ArticleAPI {
         guard var baseURLComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             throw APIError.unableToCreateURLComponents(url: url)
         }
+        let locale = (locale ?? Locale.current)
+        let country = locale.regionCode?.lowercased() ?? locale.regionCode
         var queryItems = [
-            URLQueryItem(name: "country", value: (locale ?? Locale.current).languageCode),
+            URLQueryItem(name: "country", value: country),
             URLQueryItem(name: "apiKey", value: apiToken),
         ]
 

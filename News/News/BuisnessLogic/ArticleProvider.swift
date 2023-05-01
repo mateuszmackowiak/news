@@ -21,6 +21,13 @@ final class APIArticleProvider: ArticleProvider {
     }
 
     func articles() async throws -> [Article] {
-        mapper.map(try await api.getArticle(locale: .current))
+        do {
+            let articles = mapper.map(try await api.getArticle(locale: .init(identifier: "en_US"), category: .technology))
+            Log.debug("Received articles \(articles)")
+            return articles
+        } catch {
+            Log.warning("Failed to fetch articles \(error)")
+            throw error
+        }
     }
 }

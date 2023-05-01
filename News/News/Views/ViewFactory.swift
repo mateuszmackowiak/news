@@ -16,6 +16,28 @@ final class ViewFactory {
     }
 
     func topHeadlinesView() -> some View {
-        TopHeadlinesView(viewModel: .init(provider: dependencyContainer.articleProvider()))
+        NavigationView {
+            TopHeadlinesView(viewModel: .init(provider: dependencyContainer.articleProvider()))
+        }
+    }
+
+    func bookmarkedView() -> some View {
+        NavigationView {
+            BookmarkedView(viewModel: .init())
+        }
+    }
+
+    func mainView() -> some View {
+        TabView {
+            topHeadlinesView()
+                .tabItem {
+                    Image.headlinesTabItem
+                }
+
+            bookmarkedView()
+                .tabItem {
+                    Image(systemName: "bookmark")
+                }
+        }
     }
 }
