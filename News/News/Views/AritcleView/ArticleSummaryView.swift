@@ -13,8 +13,6 @@ struct ArticleSummaryView: View {
     let publishedDate: Date
     let source: String
 
-    let bookmarkAction: @MainActor () -> Void
-
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if let imageURL {
@@ -60,14 +58,10 @@ struct ArticleSummaryView: View {
                 ArticleCaptionView(source: source,
                                    publishedDate: publishedDate)
                 Spacer()
-                Button {
-                    bookmarkAction()
-                } label: {
-                    Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
-                        .padding()
-                        .contentShape(Rectangle().size(CGSize(width: 44, height: 44)))
-                        .accessibilityIdentifier("bookmark")
-                }
+                Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
+                    .padding()
+                    .contentShape(Rectangle().size(CGSize(width: 44, height: 44)))
+                    .accessibilityIdentifier("bookmark")
             }
         }
         .multilineTextAlignment(.leading)
@@ -87,32 +81,28 @@ struct ArticleSummaryView_Preview: PreviewProvider {
                                    desc: "Two Tomb Raider spin-offs are due out this year",
                                    bookmarked: false,
                                    publishedDate: Date(timeIntervalSince1970: 1682849160),
-                                   source: "Nintendo Life",
-                                   bookmarkAction: {})
+                                   source: "Nintendo Life")
 
                 ArticleSummaryView(title: "'The Lara Croft Collection' For Switch Has Been Rated By The ESRB - Nintendo Life",
                                    imageURL: URL(string: "https://images.nintendolife")!,
                                    desc: "Two Tomb Raider spin-offs are due out this year",
                                    bookmarked: true,
                                    publishedDate: Date(timeIntervalSince1970: 1682849160),
-                                   source: "Nintendo Life",
-                                   bookmarkAction: {})
+                                   source: "Nintendo Life")
 
                 ArticleSummaryView(title: "'The Lara Croft Collection' For Switch Has Been Rated By The ESRB - Nintendo Life",
                                    imageURL: nil,
                                    desc: "Two Tomb Raider spin-offs are due out this year",
                                    bookmarked: false,
                                    publishedDate: Date(timeIntervalSince1970: 1682849160),
-                                   source: "Nintendo Life",
-                                   bookmarkAction: {})
+                                   source: "Nintendo Life")
 
                 ArticleSummaryView(title: "'The Lara Croft Collection' For Switch Has Been Rated By The ESRB - Nintendo Life",
                                    imageURL: URL(string: "https://images.nintendolife.com/59f9897cd722f/1280x720.jpg")!,
                                    desc: "Two Tomb Raider spin-offs are due out this year",
                                    bookmarked: false,
                                    publishedDate: Date(timeIntervalSince1970: 1682849160),
-                                   source: "Nintendo Life",
-                                   bookmarkAction: {})
+                                   source: "Nintendo Life")
             }
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             .listRowBackground(Color.clear)

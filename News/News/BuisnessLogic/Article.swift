@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Article: Identifiable, Hashable, Sendable {
+public struct Article: Codable, Identifiable, Hashable, Sendable {
     public let id: String
     public let source: ArticleSource
     public let author: String?
@@ -19,7 +19,7 @@ public struct Article: Identifiable, Hashable, Sendable {
     public let content: String?
 }
 
-public struct ArticleSource: Identifiable, Hashable, Sendable {
+public struct ArticleSource: Codable, Identifiable, Hashable, Sendable {
     public let id: String?
     public let name: String
 }

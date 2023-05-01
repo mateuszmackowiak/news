@@ -9,20 +9,19 @@ import SwiftUI
 
 struct SourcesView<DestinationView: View>: View {
     @ObservedObject var viewModel: ViewModel
-    @ViewBuilder let destinationView: (_ source: Source) -> DestinationView
+    @ViewBuilder let destinationView: @MainActor (_ source: Source) -> DestinationView
 
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.sources ?? []) { source in
-                    ZStack {
-                        NavigationLink(destination: { destinationView(source) }, label: { EmptyView() }).opacity(0)
+                    NavigationLink(destination: { destinationView(source) }, label: {
                         SourceSummaryView(name: source.name,
                                           desc: source.description,
                                           category: source.category,
                                           language: source.language,
                                           country: source.country)
-                    }
+                    })
                 }
                 .listRowBackground(Color.clear)
             }

@@ -12,11 +12,13 @@ import Combine
 @MainActor
 final class ArticlesViewTests: XCTestCase {
     private lazy var provider: ArticleProviderMock! = ArticleProviderMock()
-    private lazy var tested: ArticlesViewModel! = ArticlesViewModel(provider: provider)
+    private lazy var bookmarkStorage: BookmarkStorageMock! = BookmarkStorageMock()
+    private lazy var tested: ArticlesViewModel! = ArticlesViewModel(provider: provider, bookmarkedCache: BookmarkedCache(bookmarkStorage: bookmarkStorage))
     private var cancellable = Set<AnyCancellable>()
 
     override func tearDown() {
         provider = nil
+        bookmarkStorage = nil
         tested = nil
         super.tearDown()
     }
@@ -24,6 +26,7 @@ final class ArticlesViewTests: XCTestCase {
     func testOnAppear() {
         let mocks = [Article.mock(), .mock()]
         let exp = expectation(description: "received")
+        bookmarkStorage.articlesStub = { [] }
         provider.articlesStub = { _, _ in
             mocks
         }
@@ -34,7 +37,7 @@ final class ArticlesViewTests: XCTestCase {
 
         tested.onAppear()
 
-        wait(for: [exp])
+        wait(for: [exp], timeout: 10)
         XCTAssertEqual(try XCTUnwrap(tested.articles).map(\.article), mocks)
     }
 }

@@ -9,24 +9,19 @@ import SwiftUI
 
 struct ArticlesView<DestinationView: View>: View {
     @ObservedObject private(set) var viewModel: ArticlesViewModel
-    @ViewBuilder let destinationView: (_ article: Article) -> DestinationView
+    @ViewBuilder let destinationView: @MainActor (_ article: Article) -> DestinationView
 
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.articles ?? [], id: \.0) { (article, bookmarked) in
-                    ZStack {
-                        NavigationLink(destination: { destinationView(article) }) { EmptyView() }.opacity(0.0)
-
+                    NavigationLink(destination: { destinationView(article) }) {
                         ArticleSummaryView(title: article.title,
                                            imageURL: article.urlToImage,
                                            desc: article.description,
                                            bookmarked: bookmarked,
                                            publishedDate: article.publishedAt,
-                                           source: article.source.name,
-                                           bookmarkAction: {
-                            viewModel.bookmarkAction(for: article)
-                        })
+                                           source: article.source.name)
                     }
                 }
                 .listRowBackground(Color.clear)
@@ -53,6 +48,8 @@ struct ArticlesView<DestinationView: View>: View {
                         ZStack {
                             Color.background.ignoresSafeArea()
                             Text("Oops, loos like there's no data...")
+                                .font(.headline)
+                                .multilineTextAlignment(.center)
                         }
                     }
                 } else {
@@ -69,7 +66,6 @@ struct ArticlesView<DestinationView: View>: View {
         .background(Color.background)
         .foregroundColor(Color.primaryText)
         .navigationTitle("Article")
-        .navigationBarItems(trailing: LogoView().frame(width: 22, height: 22))
     }
 }
 
@@ -99,9 +95,15 @@ struct ArticlesView_Previews: PreviewProvider {
             ]
         }
     }
+
+    private final class BookmarkStorageMock: BookmarkStorage {
+        func store(articles: [Article]) { }
+        func articles() -> [Article] { [] }
+    }
+
     static var previews: some View {
         NavigationView {
-            ArticlesView(viewModel: .init(provider: ArticleProviderMock()), destinationView: { _ in EmptyView() })
+            ArticlesView(viewModel: .init(provider: ArticleProviderMock(), bookmarkedCache: BookmarkedCache(bookmarkStorage: BookmarkStorageMock())), destinationView: { _ in EmptyView() })
         }
         .preferredColorScheme(.dark)
     }

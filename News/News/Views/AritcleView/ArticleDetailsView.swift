@@ -6,12 +6,11 @@
 import SwiftUI
 
 struct ArticleDetailsView: View {
-    let article: Article
-    let bookmarked: Bool = false
+    @ObservedObject var viewModel: ArticleDetailsViewModel
 
     var body: some View {
         VStack {
-            WebView(url: article.url)
+            WebView(url: viewModel.article.url)
                 .padding(.top)
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -21,7 +20,7 @@ struct ArticleDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack {
-                    Text(article.title)
+                    Text(viewModel.article.title)
                         .font(.title3)
                         .minimumScaleFactor(0.5)
                 }
@@ -29,9 +28,9 @@ struct ArticleDetailsView: View {
 
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    #warning("TODO: implement bookmarking")
+                    viewModel.bookmarkAction()
                 } label: {
-                    Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
+                    Image(systemName: viewModel.isBookmarked() ? "bookmark.fill" : "bookmark")
                         .padding()
                         .contentShape(Rectangle().size(CGSize(width: 32, height: 32)))
                 }
@@ -42,9 +41,13 @@ struct ArticleDetailsView: View {
 
 #if DEBUG
 struct ArticleDetailsView_Preview: PreviewProvider {
+    private final class BookmarkStorageMock: BookmarkStorage {
+        func articles() -> [Article] { [] }
+        func store(articles: [Article]) {}
+    }
     static var previews: some View {
         NavigationView {
-            ArticleDetailsView(article: .sample)
+            ArticleDetailsView(viewModel: ArticleDetailsViewModel(article: .sample, bookmarkedCache: BookmarkedCache(bookmarkStorage: BookmarkStorageMock())))
             .navigationBarItems(leading: Button(action: {}, label: { Image(systemName: "chevron.left") }))
         }
         .navigationViewStyle(.stack)

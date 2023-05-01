@@ -32,6 +32,18 @@ final class ArticleProviderMock: ArticleProvider {
     }
 }
 
+final class BookmarkStorageMock: BookmarkStorage {
+    var articlesStub: (() -> [News.Article])!
+    var storeStub: ((_ articles: [News.Article]) -> Void)!
+
+    func articles() -> [News.Article] {
+        articlesStub()
+    }
+    func store(articles: [News.Article]) {
+        storeStub(articles)
+    }
+}
+
 extension API.Article {
     static func mock() -> API.Article {
         .init(source: .init(id: nil, name: "Nintendo Life"),

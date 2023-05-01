@@ -6,20 +6,23 @@
 //
 
 import Foundation
+import Combine
 
-extension BookmarkedView {
-    @MainActor
-    final class ViewModel: ObservableObject {
-        @Published private(set) var articles: [Article] = []
+@MainActor
+final class BookmarkedViewModel: ObservableObject {
+    private let bookmarkedCache: BookmarkedCache
+    private var cancellable: AnyCancellable?
+    @Published private(set) var articles: [Article] = []
 
-        init() {
-        }
+    init(bookmarkedCache: BookmarkedCache) {
+        self.bookmarkedCache = bookmarkedCache
+        articles = bookmarkedCache.articles
+        cancellable = bookmarkedCache.$articles.sink(receiveValue: { [weak self] articles in
+            self?.articles = articles
+        })
+    }
 
-        func onAppear() {
-        }
-
-        func bookmarkAction(for article: Article) {
-            #warning("TODO: implement bookmarking")
-        }
+    func isBookmarked(article: Article) -> Bool {
+        bookmarkedCache.isBookmarked(article: article)
     }
 }

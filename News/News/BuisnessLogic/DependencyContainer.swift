@@ -9,6 +9,11 @@ import Foundation
 import API
 
 final class DependencyContainer {
+    private var userDefaultBookmarkStorage = UserDefaultBookmarkStorage(userDefaults: .standard)
+    func bookmarkStorage() -> any BookmarkStorage {
+        userDefaultBookmarkStorage
+    }
+
     func articleProvider() -> any ArticleProvider {
         let overrideURL = baseURLOverride()?.appendingPathComponent("/v2/top-headlines")
         return APIArticleProvider(api: NetworkClientArticleApi(client: URLSessionClient(), url: overrideURL, apiToken: "f98efbe69f9c44e282001015ed055a08"), mapper: DefaultArticleMapper())

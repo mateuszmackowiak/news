@@ -7,25 +7,22 @@
 
 import SwiftUI
 
-struct BookmarkedView: View {
-    @ObservedObject private(set) var viewModel: ViewModel
+
+struct BookmarkedView<DestinationView: View>: View {
+    @ObservedObject private(set) var viewModel: BookmarkedViewModel
+    @ViewBuilder let destinationView: @MainActor (_ article: Article) -> DestinationView
 
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.articles) { article in
-                    NavigationLink {
-                        ArticleDetailsView(article: article)
-                    } label: {
+                    NavigationLink(destination: { destinationView(article) }) {
                         ArticleSummaryView(title: article.title,
                                            imageURL: article.urlToImage,
                                            desc: article.description,
                                            bookmarked: true,
                                            publishedDate: article.publishedAt,
-                                           source: article.source.name,
-                                           bookmarkAction: {
-                            viewModel.bookmarkAction(for: article)
-                        })
+                                           source: article.source.name)
                     }
                 }
                 .listRowBackground(Color.clear)
@@ -38,28 +35,30 @@ struct BookmarkedView: View {
                         Image(systemName: "bookmark")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 44)
+                            .frame(width: 30)
                             .foregroundColor(.accentColor)
                         Text("Loos like You have not bookmarks")
-                            .font(.title)
+                            .font(.headline)
                             .multilineTextAlignment(.center)
                     }
                 }
             }
         }
-        .onAppear { viewModel.onAppear() }
         .background(Color.background)
         .foregroundColor(Color.primaryText)
         .navigationTitle("Bookmarks")
-        .navigationBarItems(trailing: LogoView().frame(width: 22, height: 22))
     }
 }
 
 struct BookmarkedView_Previews: PreviewProvider {
+    private final class BookmarkStorageMock: BookmarkStorage {
+        func store(articles: [Article]) {}
+        func articles() -> [Article] { [] }
+    }
     static var previews: some View {
         TabView {
             NavigationView {
-                BookmarkedView(viewModel: .init())
+                BookmarkedView(viewModel: .init(bookmarkedCache: BookmarkedCache(bookmarkStorage: BookmarkStorageMock())), destinationView: { _ in EmptyView() })
             }
         }
         .preferredColorScheme(.dark)
