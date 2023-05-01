@@ -22,7 +22,7 @@ final class ArticleTests: XCTestCase {
                                    urlToImage: URL(string: "https://t3n.de/news/wp-content/uploads/2023/04/Bitcoin-Ethereum-stromverbrauch-vergleich.jpg")!,
                                    publishedAt: Date(timeIntervalSince1970: 1682773200),
                                    content: "Die University of Cambridge zeigt in einer Analyse, wie viel Energie Ethereum vor und nach dem Wechsel von Proof-of-Work zu Proof-of-Stake verbraucht und wie diese Werte mit dem Verbrauch von Bitcoin… [+2366 chars]")]
-        let responseData = try Data(contentsOf: Bundle.module.url(forResource: "SampleResponse", withExtension: "json")!)
+        let responseData = try Data(contentsOf: Bundle.module.url(forResource: "SampleArticlesResponse", withExtension: "json")!)
         mockClient.fetchStub = { _ in
             return .init(data: responseData, statusCode: 200, headers: [:])
         }

@@ -12,7 +12,7 @@ struct ArticleCaptionView: View {
     var body: some View {
         HStack(spacing: 10) {
             Text(source)
-                .foregroundColor(.secondaryAccentColor)
+                .foregroundColor(.accentColor)
                 .accessibilityIdentifier("source")
 
             Text(publishedDate, style: .relative)

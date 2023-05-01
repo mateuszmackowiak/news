@@ -5,16 +5,6 @@
 
 import Foundation
 
-public enum Category: String, Hashable, Sendable {
-    case business
-    case entertainment
-    case general
-    case health
-    case science
-    case sports
-    case technology
-}
-
 public protocol ArticleAPI {
     func getArticle(locale: Locale?, query: String?, sources: String?, category: Category?, pageSize: UInt?, page: UInt8?) async throws -> [Article]
 }

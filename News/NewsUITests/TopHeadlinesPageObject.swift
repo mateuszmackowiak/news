@@ -25,6 +25,16 @@ public class TopHeadlinesPageObject {
         with(Cell(element: app.collectionViews["topHeadlines"].cells.element(boundBy: Int(index))), closure)
     }
 
+    @discardableResult
+    func bookmarks(_ closure: (XCUIElement) -> Void = {_ in }) -> XCUIElement {
+        with(app.buttons["bookmarks"], closure)
+    }
+
+    @discardableResult
+    func sources(_ closure: (XCUIElement) -> Void = {_ in }) -> XCUIElement {
+        with(app.buttons["sources"], closure)
+    }
+
     struct Cell {
         let element: XCUIElement
 

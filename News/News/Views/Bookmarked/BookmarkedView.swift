@@ -39,7 +39,7 @@ struct BookmarkedView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 44)
-                            .foregroundColor(.secondaryAccentColor)
+                            .foregroundColor(.accentColor)
                         Text("Loos like You have not bookmarks")
                             .font(.title)
                             .multilineTextAlignment(.center)

@@ -27,16 +27,30 @@ final class ViewFactory {
         }
     }
 
+    func sourcesView() -> some View {
+        NavigationView {
+            SourcesView(viewModel: .init(provider: dependencyContainer.sourceProvider()))
+        }
+    }
+
     func mainView() -> some View {
         TabView {
-            topHeadlinesView()
-                .tabItem {
-                    Image.headlinesTabItem
-                }
-
             bookmarkedView()
                 .tabItem {
                     Image(systemName: "bookmark")
+                        .accessibilityIdentifier("bookmark")
+                }
+
+            topHeadlinesView()
+                .tabItem {
+                    Image.headlinesTabItem
+                        .accessibilityIdentifier("headlines")
+                }
+
+            sourcesView()
+                .tabItem {
+                    Image(systemName: "dot.radiowaves.left.and.right")
+                        .accessibilityIdentifier("sources")
                 }
         }
     }

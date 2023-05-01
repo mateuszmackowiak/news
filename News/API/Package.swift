@@ -20,7 +20,7 @@ let package = Package(
         .testTarget(
             name: "APITests",
             dependencies: ["API"],
-            resources: [.copy("Resources/SampleResponse.json")]),
+            resources: [.copy("Resources/SampleArticlesResponse.json")]),
         .testTarget(
             name: "OnlineIntegrationTests",
             dependencies: ["API"]),

@@ -21,6 +21,16 @@ public class BookmarkListPageObject {
     }
 
     @discardableResult
+    func headlines(_ closure: (XCUIElement) -> Void = {_ in }) -> XCUIElement {
+        with(app.buttons["headlines"], closure)
+    }
+
+    @discardableResult
+    func sources(_ closure: (XCUIElement) -> Void = {_ in }) -> XCUIElement {
+        with(app.buttons["sources"], closure)
+    }
+
+    @discardableResult
     func cell(index: UInt, _ closure: (Cell) -> Void = {_ in }) -> Cell {
         with(Cell(element: app.collectionViews["bookmark"].cells.element(boundBy: Int(index))), closure)
     }
