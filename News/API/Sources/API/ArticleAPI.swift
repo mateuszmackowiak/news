@@ -6,11 +6,11 @@
 import Foundation
 
 public protocol ArticleAPI {
-    func getArticle(locale: Locale?, query: String?, sources: String?, category: Category?, pageSize: UInt?, page: UInt8?) async throws -> [Article]
+    func getArticle(locale: Locale?, query: String?, sources: Source.ID?, category: Category?, pageSize: UInt?, page: UInt8?) async throws -> [Article]
 }
 
 public extension ArticleAPI {
-    func getArticle(locale: Locale? = nil, query: String? = nil, sources: String? = nil, category: Category? = nil, pageSize: UInt? = nil, page: UInt8? = nil) async throws -> [Article] {
+    func getArticle(locale: Locale? = nil, query: String? = nil, sources: Source.ID? = nil, category: Category? = nil, pageSize: UInt? = nil, page: UInt8? = nil) async throws -> [Article] {
         try await getArticle(locale: locale, query: query, sources: sources, category: category, pageSize: pageSize, page: page)
     }
 }
@@ -23,7 +23,7 @@ public final class NetworkClientArticleApi: ArticleAPI {
     private struct ResponseContainer: Decodable {
         let status: String
         let totalResults: Int?
-        let articles: [Article]
+        @LossyArray private(set) var articles: [Article]
     }
     let client: Client
     let url: URL
@@ -41,17 +41,19 @@ public final class NetworkClientArticleApi: ArticleAPI {
         self.apiToken = apiToken
     }
 
-    public func getArticle(locale: Locale?, query: String?, sources: String?, category: Category?, pageSize: UInt?, page: UInt8?) async throws -> [Article] {
+    public func getArticle(locale: Locale?, query: String?, sources: Source.ID?, category: Category?, pageSize: UInt?, page: UInt8?) async throws -> [Article] {
         guard var baseURLComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             throw APIError.unableToCreateURLComponents(url: url)
         }
         let locale = (locale ?? Locale.current)
         let country = locale.regionCode?.lowercased() ?? locale.regionCode
         var queryItems = [
-            URLQueryItem(name: "country", value: country),
             URLQueryItem(name: "apiKey", value: apiToken),
         ]
 
+        if let country, sources == nil {
+            queryItems.append(URLQueryItem(name: "country", value: country))
+        }
         if let query {
             queryItems.append(.init(name: "query", value: query))
         }

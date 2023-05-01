@@ -28,7 +28,7 @@ final class APIRepositoryProviderTests: XCTestCase {
         api.getArticleStub = { _, _, _, _, _, _ in throw MockError() }
 
         do {
-            _ = try await tested.articles(category: nil)
+            _ = try await tested.articles(category: nil, source: nil)
         } catch is MockError {
             print("Valid error returned")
         } catch {
@@ -54,7 +54,7 @@ final class APIRepositoryProviderTests: XCTestCase {
             throw MockError()
         }
 
-        _ = try? await tested.articles(category: nil)
+        _ = try? await tested.articles(category: nil, source: nil)
 
         XCTAssertEqual(locale, .current)
         XCTAssertNil(query)
@@ -72,7 +72,7 @@ final class APIRepositoryProviderTests: XCTestCase {
             throw MockError()
         }
 
-        _ = try? await tested.articles(category: .business)
+        _ = try? await tested.articles(category: .business, source: nil)
 
         XCTAssertEqual(sendCategory, .business)
     }
@@ -89,7 +89,7 @@ final class APIRepositoryProviderTests: XCTestCase {
             return mockAppModels
         }
 
-        let returned = try await tested.articles(category: nil)
+        let returned = try await tested.articles(category: nil, source: nil)
 
         XCTAssertEqual(dataToBeMapped, mockAPIModels)
         XCTAssertEqual(returned, mockAppModels)

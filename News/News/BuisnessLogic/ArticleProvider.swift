@@ -11,7 +11,7 @@ import API
 typealias Category = API.Category
 
 protocol ArticleProvider {
-    func articles(category: Category?) async throws -> [Article]
+    func articles(category: Category?, source: Source.ID?) async throws -> [Article]
 }
 
 final class APIArticleProvider: ArticleProvider {
@@ -25,13 +25,13 @@ final class APIArticleProvider: ArticleProvider {
         self.locale = locale
     }
 
-    func articles(category: Category?) async throws -> [Article] {
+    func articles(category: Category?, source: Source.ID?) async throws -> [Article] {
         do {
-            let articles = mapper.map(try await api.getArticle(locale: locale, category: category))
+            let articles = mapper.map(try await api.getArticle(locale: locale, sources: source, category: category))
             Log.debug("Received articles \(articles)")
             return articles
         } catch {
-            Log.warning("Failed to fetch articles \(error)")
+            Log.warning("Failed to fetch articles \(error) source \(String(describing: source)) category \(String(describing: category))")
             throw error
         }
     }

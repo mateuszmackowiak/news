@@ -10,9 +10,9 @@ import Combine
 @testable import News
 
 @MainActor
-final class TopHeadlinesViewModelTests: XCTestCase {
+final class ArticlesViewTests: XCTestCase {
     private lazy var provider: ArticleProviderMock! = ArticleProviderMock()
-    private lazy var tested: TopHeadlinesView.ViewModel! = TopHeadlinesView.ViewModel(provider: provider)
+    private lazy var tested: ArticlesViewModel! = ArticlesViewModel(provider: provider)
     private var cancellable = Set<AnyCancellable>()
 
     override func tearDown() {
@@ -24,7 +24,7 @@ final class TopHeadlinesViewModelTests: XCTestCase {
     func testOnAppear() {
         let mocks = [Article.mock(), .mock()]
         let exp = expectation(description: "received")
-        provider.articlesStub = { _ in
+        provider.articlesStub = { _, _ in
             mocks
         }
 

@@ -39,7 +39,7 @@ final class ArticleTests: XCTestCase {
             return .init(data: Data(), statusCode: 200, headers: [:])
         }
         let query = "324"
-        let expectedURLComponents = URLComponents(string: "https://newsapi.org/v2/top-headlines?country=pl&apiKey=\(apiToken!)&query=\(query)&sources=cnn&category=science&pageSize=5&page=2")!
+        let expectedURLComponents = URLComponents(string: "https://newsapi.org/v2/top-headlines?apiKey=\(apiToken!)&query=\(query)&sources=cnn&category=science&pageSize=5&page=2")!
 
         _ = try? await tested.getArticle(locale: Locale(identifier: "pl_PL"), query: query, sources: "cnn", category: .science, pageSize: 5, page: 2)
 

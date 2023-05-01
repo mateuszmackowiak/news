@@ -7,18 +7,22 @@
 
 import SwiftUI
 
-struct SourcesView: View {
+struct SourcesView<DestinationView: View>: View {
     @ObservedObject var viewModel: ViewModel
+    @ViewBuilder let destinationView: (_ source: Source) -> DestinationView
 
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.sources ?? []) { source in
-                    SourceSummaryView(name: source.name,
-                                      desc: source.description,
-                                      category: source.category,
-                                      language: source.language,
-                                      country: source.country)
+                    ZStack {
+                        NavigationLink(destination: { destinationView(source) }, label: { EmptyView() }).opacity(0)
+                        SourceSummaryView(name: source.name,
+                                          desc: source.description,
+                                          category: source.category,
+                                          language: source.language,
+                                          country: source.country)
+                    }
                 }
                 .listRowBackground(Color.clear)
             }
@@ -81,6 +85,6 @@ struct SourcesView_Preview: PreviewProvider {
     }
 
     static var previews: some View {
-        SourcesView(viewModel: .init(provider: SourceProviderMock()))
+        SourcesView(viewModel: .init(provider: SourceProviderMock()), destinationView: { _ in EmptyView() })
     }
 }

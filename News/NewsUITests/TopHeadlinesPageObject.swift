@@ -22,7 +22,7 @@ public class TopHeadlinesPageObject {
 
     @discardableResult
     func cell(index: UInt, _ closure: (Cell) -> Void = {_ in }) -> Cell {
-        with(Cell(element: app.collectionViews["topHeadlines"].cells.element(boundBy: Int(index))), closure)
+        with(Cell(element: app.collectionViews["articles"].cells.element(boundBy: Int(index))), closure)
     }
 
     @discardableResult

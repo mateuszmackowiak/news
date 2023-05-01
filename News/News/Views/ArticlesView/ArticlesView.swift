@@ -7,15 +7,16 @@
 
 import SwiftUI
 
-struct TopHeadlinesView: View {
-    @ObservedObject private(set) var viewModel: ViewModel
+struct ArticlesView<DestinationView: View>: View {
+    @ObservedObject private(set) var viewModel: ArticlesViewModel
+    @ViewBuilder let destinationView: (_ article: Article) -> DestinationView
 
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.articles ?? [], id: \.0) { (article, bookmarked) in
                     ZStack {
-                        NavigationLink(destination: ArticleDetailsView(article: article)) { EmptyView() }.opacity(0.0)
+                        NavigationLink(destination: { destinationView(article) }) { EmptyView() }.opacity(0.0)
 
                         ArticleSummaryView(title: article.title,
                                            imageURL: article.urlToImage,
@@ -30,7 +31,7 @@ struct TopHeadlinesView: View {
                 }
                 .listRowBackground(Color.clear)
             }
-            .accessibilityIdentifier("topHeadlines")
+            .accessibilityIdentifier("articles")
             .listStyle(.plain)
             .overlay {
                 if let failureMessage = viewModel.failureMessage {
@@ -72,9 +73,9 @@ struct TopHeadlinesView: View {
     }
 }
 
-struct TopHeadlinesView_Previews: PreviewProvider {
+struct ArticlesView_Previews: PreviewProvider {
     private struct ArticleProviderMock: ArticleProvider {
-        func articles(category: Category?) async throws -> [Article] {
+        func articles(category: Category?, source: Source.ID?) async throws -> [Article] {
             [
                 Article(id: "https://t3n.de/news/infografik-energieverbrauch-bitcoin-ethereum-vergleich-1548941/",
                      source: .init(id: "t3n", name: "T3n"),
@@ -100,7 +101,7 @@ struct TopHeadlinesView_Previews: PreviewProvider {
     }
     static var previews: some View {
         NavigationView {
-            TopHeadlinesView(viewModel: .init(provider: ArticleProviderMock()))
+            ArticlesView(viewModel: .init(provider: ArticleProviderMock()), destinationView: { _ in EmptyView() })
         }
         .preferredColorScheme(.dark)
     }

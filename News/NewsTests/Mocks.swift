@@ -26,9 +26,9 @@ final class ArticleMapperMock: ArticleMapper {
 }
 
 final class ArticleProviderMock: ArticleProvider {
-    var articlesStub: ((_ category: News.Category?) async throws -> [News.Article])!
-    func articles(category: News.Category?) async throws -> [News.Article] {
-        try await articlesStub(category)
+    var articlesStub: ((_ category: News.Category?, _ source: News.Source.ID?) async throws -> [News.Article])!
+    func articles(category: News.Category?, source: News.Source.ID?) async throws -> [News.Article] {
+        try await articlesStub(category, source)
     }
 }
 

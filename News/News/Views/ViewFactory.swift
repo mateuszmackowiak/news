@@ -17,7 +17,7 @@ final class ViewFactory {
 
     func topHeadlinesView() -> some View {
         NavigationView {
-            TopHeadlinesView(viewModel: .init(provider: dependencyContainer.articleProvider()))
+            articlesView(source: nil)
         }
     }
 
@@ -29,7 +29,15 @@ final class ViewFactory {
 
     func sourcesView() -> some View {
         NavigationView {
-            SourcesView(viewModel: .init(provider: dependencyContainer.sourceProvider()))
+            SourcesView(viewModel: .init(provider: dependencyContainer.sourceProvider()), destinationView: { [unowned self] source in
+                self.articlesView(source: source.id)
+            })
+        }
+    }
+
+    func articlesView(source: Source.ID?) -> some View {
+        ArticlesView(viewModel: .init(provider: dependencyContainer.articleProvider(), source: source)) { article in
+            ArticleDetailsView(article: article)
         }
     }
 
