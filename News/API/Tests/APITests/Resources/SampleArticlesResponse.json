@@ -1,0 +1,17 @@
+{
+    "status": "ok",
+    "totalResults": 1,
+    "articles": [{
+        "source": {
+            "id": "t3n",
+            "name": "T3n"
+        },
+        "author": "Kay Nordenbrock",
+        "title": "Energieverbrauch von Bitcoin und Ethereum: Wie Wolkenkratzer neben Himbeere",
+        "description": "Bitcoin verbraucht deutlich mehr Energie als Ethereum. Ethereum mit Proof-of-Stake wiederum benötigt deutlich",
+        "url": "https://t3n.de/news/infografik-energieverbrauch-bitcoin-ethereum-vergleich-1548941/",
+        "urlToImage": "https://t3n.de/news/wp-content/uploads/2023/04/Bitcoin-Ethereum-stromverbrauch-vergleich.jpg",
+        "publishedAt": "2023-04-29T13:00:00Z",
+        "content": "Die University of Cambridge zeigt in einer Analyse, wie viel Energie Ethereum vor und nach dem Wechsel von Proof-of-Work zu Proof-of-Stake verbraucht und wie diese Werte mit dem Verbrauch von Bitcoin… [+2366 chars]"
+    }]
+}
