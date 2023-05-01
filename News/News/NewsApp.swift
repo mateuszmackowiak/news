@@ -8,10 +8,16 @@
 import SwiftUI
 
 @main
+@MainActor
 struct NewsApp: App {
+    private let viewFactory = ViewFactory(dependencyContainer: DependencyContainer())
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                viewFactory.topHeadlinesView()
+            }
+            .preferredColorScheme(.dark)
         }
     }
 }
