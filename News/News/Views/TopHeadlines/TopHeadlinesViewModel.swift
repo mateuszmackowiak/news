@@ -12,7 +12,7 @@ extension TopHeadlinesView {
     final class ViewModel: ObservableObject {
         private var provider: any ArticleProvider
         @Published private(set) var failureMessage: String?
-        @Published private(set) var articles: [(Article, bookmarked: Bool)]?
+        @Published private(set) var articles: [(article: Article, bookmarked: Bool)]?
 
         init(provider: any ArticleProvider) {
             self.provider = provider
@@ -26,8 +26,8 @@ extension TopHeadlinesView {
 
         func onRefresh() async {
             do {
-                articles = try await provider.articles().map {
-                    ($0, bookmarked: .random())
+                articles = try await provider.articles(category: nil).map {
+                    (article: $0, bookmarked: .random())
                 }
             } catch {
                 failureMessage = "\(error)"
@@ -35,7 +35,7 @@ extension TopHeadlinesView {
         }
 
         func bookmarkAction(for article: Article) {
-
+            #warning("TODO: implement bookmarking")
         }
     }
 }

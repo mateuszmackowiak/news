@@ -30,7 +30,7 @@ struct BookmarkedView: View {
                 }
                 .listRowBackground(Color.clear)
             }
-            .accessibilityIdentifier("topHeadlines")
+            .accessibilityIdentifier("bookmark")
             .listStyle(.plain)
             .overlay {
                 if viewModel.articles.isEmpty {

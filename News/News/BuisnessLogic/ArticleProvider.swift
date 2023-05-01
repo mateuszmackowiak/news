@@ -5,24 +5,29 @@
 //  Created by Mateusz Mackowiak on 01/05/2023.
 //
 
+import Foundation
 import API
 
+typealias Category = API.Category
+
 protocol ArticleProvider {
-    func articles() async throws -> [Article]
+    func articles(category: Category?) async throws -> [Article]
 }
 
 final class APIArticleProvider: ArticleProvider {
     private let api: any ArticleAPI
     private let mapper: any ArticleMapper
+    private let locale: Locale
 
-    init(api: any ArticleAPI, mapper: any ArticleMapper) {
+    init(api: any ArticleAPI, mapper: any ArticleMapper, locale: Locale = .current) {
         self.api = api
         self.mapper = mapper
+        self.locale = locale
     }
 
-    func articles() async throws -> [Article] {
+    func articles(category: Category?) async throws -> [Article] {
         do {
-            let articles = mapper.map(try await api.getArticle(locale: .init(identifier: "en_US"), category: .technology))
+            let articles = mapper.map(try await api.getArticle(locale: locale, category: category))
             Log.debug("Received articles \(articles)")
             return articles
         } catch {

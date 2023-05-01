@@ -74,7 +74,7 @@ struct TopHeadlinesView: View {
 
 struct TopHeadlinesView_Previews: PreviewProvider {
     private struct ArticleProviderMock: ArticleProvider {
-        func articles() async throws -> [Article] {
+        func articles(category: Category?) async throws -> [Article] {
             [
                 Article(id: "https://t3n.de/news/infografik-energieverbrauch-bitcoin-ethereum-vergleich-1548941/",
                      source: .init(id: "t3n", name: "T3n"),

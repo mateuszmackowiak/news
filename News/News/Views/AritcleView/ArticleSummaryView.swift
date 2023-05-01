@@ -54,7 +54,7 @@ struct ArticleSummaryView: View {
                     .lineLimit(2)
                     .font(.caption)
                     .foregroundColor(.secondaryText)
-                    .accessibilityIdentifier("content")
+                    .accessibilityIdentifier("desc")
             }
             HStack {
                 ArticleCaptionView(source: source,
@@ -66,6 +66,7 @@ struct ArticleSummaryView: View {
                     Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
                         .padding()
                         .contentShape(Rectangle().size(CGSize(width: 44, height: 44)))
+                        .accessibilityIdentifier("bookmark")
                 }
             }
         }

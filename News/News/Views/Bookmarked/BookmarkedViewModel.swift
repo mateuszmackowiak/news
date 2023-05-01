@@ -16,11 +16,10 @@ extension BookmarkedView {
         }
 
         func onAppear() {
-
         }
 
         func bookmarkAction(for article: Article) {
-
+            #warning("TODO: implement bookmarking")
         }
     }
 }

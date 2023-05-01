@@ -29,7 +29,7 @@ struct ArticleDetailsView: View {
 
             ToolbarItem(placement: .primaryAction) {
                 Button {
-//                    bookmarkAction()
+                    #warning("TODO: implement bookmarking")
                 } label: {
                     Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
                         .padding()
